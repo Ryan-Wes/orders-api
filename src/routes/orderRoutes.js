@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const authMiddleware = require("../middlewares/authMiddleware");
+
 const {
   createOrder,
   getOrderById,
@@ -9,19 +11,56 @@ const {
   deleteOrder,
 } = require("../controllers/orderController");
 
-// cria um novo pedido
-router.post("/order", createOrder);
+/**
+ * @swagger
+ * tags:
+ *   name: Orders
+ *   description: Gerenciamento de pedidos
+ */
 
-// lista todos os pedidos
-router.get("/order/list", listOrders);
+/**
+ * @swagger
+ * /order:
+ *   post:
+ *     summary: Cria um novo pedido
+ *     tags: [Orders]
+ */
+router.post("/order", authMiddleware, createOrder);
 
-// busca um pedido específico
-router.get("/order/:orderId", getOrderById);
+/**
+ * @swagger
+ * /order/list:
+ *   get:
+ *     summary: Lista todos os pedidos
+ *     tags: [Orders]
+ */
+router.get("/order/list", authMiddleware, listOrders);
 
-// atualiza um pedido existente
-router.put("/order/:orderId", updateOrder);
+/**
+ * @swagger
+ * /order/{orderId}:
+ *   get:
+ *     summary: Busca um pedido pelo número
+ *     tags: [Orders]
+ */
+router.get("/order/:orderId", authMiddleware, getOrderById);
 
-// remove um pedido
-router.delete("/order/:orderId", deleteOrder);
+/**
+ * @swagger
+ * /order/{orderId}:
+ *   put:
+ *     summary: Atualiza um pedido existente
+ *     tags: [Orders]
+ */
+router.put("/order/:orderId", authMiddleware, updateOrder);
+
+/**
+ * @swagger
+ * /order/{orderId}:
+ *   delete:
+ *     summary: Remove um pedido
+ *     tags: [Orders]
+ */
+router.delete("/order/:orderId", authMiddleware, deleteOrder);
 
 module.exports = router;
