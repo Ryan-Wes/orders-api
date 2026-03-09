@@ -3,9 +3,8 @@
 API REST desenvolvida em **Node.js**, **Express** e **PostgreSQL** para
 gerenciamento de pedidos e seus itens.
 
-Este projeto foi criado como resposta a um desafio técnico e demonstra a
-implementação de um CRUD completo com persistência em banco relacional,
-organização em camadas e tratamento adequado de erros.
+Este projeto implementa um CRUD completo de pedidos com persistência em
+banco de dados relacional e organização em camadas.
 
 ------------------------------------------------------------------------
 
@@ -14,7 +13,7 @@ organização em camadas e tratamento adequado de erros.
 -   Node.js
 -   Express
 -   PostgreSQL
--   pg (driver PostgreSQL para Node.js)
+-   pg (driver PostgreSQL para Node)
 
 ------------------------------------------------------------------------
 
@@ -40,39 +39,25 @@ organização em camadas e tratamento adequado de erros.
     ├── .gitignore
     └── README.md
 
-## Responsabilidade de cada camada
-
-  Camada         Descrição
-  -------------- -------------------------------------
-  server.js      Inicializa o servidor HTTP
-  app.js         Configuração principal do Express
-  config/db.js   Conexão com PostgreSQL
-  routes         Definição das rotas da API
-  controllers    Lógica de negócio e acesso ao banco
-
 ------------------------------------------------------------------------
 
 # Banco de dados
 
-O projeto utiliza PostgreSQL com duas tabelas: **orders** e **items**.
+O projeto utiliza PostgreSQL com duas tabelas principais.
 
-## Tabela `orders`
+### Tabela `orders`
 
-  Campo           Tipo
-  --------------- -----------
-  order_id        varchar
-  value           numeric
-  creation_date   timestamp
+    order_id       varchar
+    value          numeric
+    creation_date  timestamp
 
-## Tabela `items`
+### Tabela `items`
 
-  Campo        Tipo
-  ------------ ---------
-  id           serial
-  order_id     varchar
-  product_id   integer
-  quantity     integer
-  price        numeric
+    id         serial
+    order_id   varchar
+    product_id integer
+    quantity   integer
+    price      numeric
 
 ------------------------------------------------------------------------
 
@@ -102,7 +87,7 @@ CREATE TABLE items (
 
     git clone https://github.com/Ryan-Wes/orders-api.git
 
-## 2. Entrar na pasta do projeto
+## 2. Entrar na pasta
 
     cd orders-api
 
@@ -112,7 +97,7 @@ CREATE TABLE items (
 
 ## 4. Configurar conexão com PostgreSQL
 
-Editar o arquivo:
+Editar:
 
     src/config/db.js
 
@@ -124,7 +109,7 @@ const pool = new Pool({
   host: "localhost",
   database: "orders_api",
   password: "SUA_SENHA",
-  port: 5432,
+  port: 5432
 });
 ```
 
@@ -134,7 +119,7 @@ const pool = new Pool({
 
     npm start
 
-A API ficará disponível em:
+Servidor disponível em:
 
     http://localhost:3000
 
@@ -146,7 +131,7 @@ A API ficará disponível em:
 
     POST /order
 
-### Exemplo de payload
+Exemplo de payload:
 
 ``` json
 {
@@ -165,7 +150,7 @@ A API ficará disponível em:
 
 ------------------------------------------------------------------------
 
-## Buscar pedido por ID
+## Buscar pedido
 
     GET /order/:orderId
 
@@ -189,27 +174,14 @@ A API ficará disponível em:
 
 ------------------------------------------------------------------------
 
-# Códigos de resposta HTTP
+# Códigos HTTP
 
-  Código   Significado
-  -------- --------------------------
-  200      Sucesso
-  201      Recurso criado
-  400      Erro de validação
-  404      Recurso não encontrado
-  409      Conflito
-  500      Erro interno do servidor
-
-------------------------------------------------------------------------
-
-# Observações
-
-A API recebe os dados no formato definido no desafio e realiza o
-**mapeamento interno dos campos** para a estrutura utilizada no banco de
-dados relacional.
-
-Isso garante desacoplamento entre o formato da requisição e o modelo
-persistido.
+    200  Sucesso
+    201  Recurso criado
+    400  Erro de validação
+    404  Recurso não encontrado
+    409  Conflito
+    500  Erro interno
 
 ------------------------------------------------------------------------
 
