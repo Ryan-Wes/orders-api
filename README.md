@@ -1,25 +1,24 @@
 # Orders API
 
-API desenvolvida em **Node.js**, **Express** e **PostgreSQL** para
+API REST desenvolvida em **Node.js**, **Express** e **PostgreSQL** para
 gerenciamento de pedidos e seus itens.
 
-Este projeto foi criado como resposta a um desafio técnico, com foco em
-boas práticas de organização de código, tratamento de erros e separação
-de responsabilidades.
+Este projeto foi criado como resposta a um desafio técnico e demonstra a
+implementação de um CRUD completo com persistência em banco relacional,
+organização em camadas e tratamento adequado de erros.
 
 ------------------------------------------------------------------------
 
-## Tecnologias utilizadas
+# Tecnologias utilizadas
 
 -   Node.js
 -   Express
 -   PostgreSQL
--   pg (driver PostgreSQL para Node)
--   Thunder Client / Postman para testes
+-   pg (driver PostgreSQL para Node.js)
 
 ------------------------------------------------------------------------
 
-## Estrutura do projeto
+# Estrutura do projeto
 
     orders-api
     │
@@ -37,34 +36,29 @@ de responsabilidades.
     │
     ├── server.js
     ├── package.json
+    ├── package-lock.json
+    ├── .gitignore
     └── README.md
 
-### Responsabilidade de cada camada
+## Responsabilidade de cada camada
 
-**server.js**\
-Responsável por iniciar o servidor da aplicação.
-
-**app.js**\
-Configuração principal do Express e registro das rotas.
-
-**config/db.js**\
-Gerencia a conexão com o banco PostgreSQL.
-
-**routes**\
-Define as rotas da API.
-
-**controllers**\
-Contém a lógica de negócio e comunicação com o banco.
+  Camada         Descrição
+  -------------- -------------------------------------
+  server.js      Inicializa o servidor HTTP
+  app.js         Configuração principal do Express
+  config/db.js   Conexão com PostgreSQL
+  routes         Definição das rotas da API
+  controllers    Lógica de negócio e acesso ao banco
 
 ------------------------------------------------------------------------
 
 # Banco de dados
 
-O projeto utiliza PostgreSQL com duas tabelas:
+O projeto utiliza PostgreSQL com duas tabelas: **orders** e **items**.
 
 ## Tabela `orders`
 
-  campo           tipo
+  Campo           Tipo
   --------------- -----------
   order_id        varchar
   value           numeric
@@ -72,7 +66,7 @@ O projeto utiliza PostgreSQL com duas tabelas:
 
 ## Tabela `items`
 
-  campo        tipo
+  Campo        Tipo
   ------------ ---------
   id           serial
   order_id     varchar
@@ -80,7 +74,9 @@ O projeto utiliza PostgreSQL com duas tabelas:
   quantity     integer
   price        numeric
 
-### Script de criação das tabelas
+------------------------------------------------------------------------
+
+## Script SQL para criação das tabelas
 
 ``` sql
 CREATE TABLE orders (
@@ -102,15 +98,19 @@ CREATE TABLE items (
 
 # Como executar o projeto
 
-### 1. Clonar o repositório
+## 1. Clonar o repositório
 
-    git clone <url-do-repositorio>
+    git clone https://github.com/Ryan-Wes/orders-api.git
 
-### 2. Instalar dependências
+## 2. Entrar na pasta do projeto
+
+    cd orders-api
+
+## 3. Instalar dependências
 
     npm install
 
-### 3. Configurar conexão com PostgreSQL
+## 4. Configurar conexão com PostgreSQL
 
 Editar o arquivo:
 
@@ -130,11 +130,11 @@ const pool = new Pool({
 
 ------------------------------------------------------------------------
 
-### 4. Executar a API
+## 5. Executar a aplicação
 
     npm start
 
-Servidor rodará em:
+A API ficará disponível em:
 
     http://localhost:3000
 
@@ -189,28 +189,27 @@ Servidor rodará em:
 
 ------------------------------------------------------------------------
 
-# Tratamento de erros
+# Códigos de resposta HTTP
 
-A API retorna códigos HTTP apropriados:
-
-  código   significado
+  Código   Significado
   -------- --------------------------
-  200      sucesso
-  201      recurso criado
-  400      erro de validação
-  404      recurso não encontrado
-  500      erro interno do servidor
+  200      Sucesso
+  201      Recurso criado
+  400      Erro de validação
+  404      Recurso não encontrado
+  409      Conflito
+  500      Erro interno do servidor
 
 ------------------------------------------------------------------------
 
 # Observações
 
-A API recebe os dados no formato especificado no desafio e realiza o
-**mapeamento interno dos campos** para o modelo relacional utilizado no
-banco de dados.
+A API recebe os dados no formato definido no desafio e realiza o
+**mapeamento interno dos campos** para a estrutura utilizada no banco de
+dados relacional.
 
-Isso garante desacoplamento entre o formato da requisição e a estrutura
-persistida.
+Isso garante desacoplamento entre o formato da requisição e o modelo
+persistido.
 
 ------------------------------------------------------------------------
 
